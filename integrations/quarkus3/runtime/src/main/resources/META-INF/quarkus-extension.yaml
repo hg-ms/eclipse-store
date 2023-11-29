@@ -1,0 +1,8 @@
+name: Eclipse Store Quarkus 3 Extension
+description: Integrate Eclipse Store within your application.
+metadata:
+  keywords:
+    - EclipseStore
+  guide: https://docs.eclipsestore.io/manual/misc/integrations/quarkus.html
+  categories:
+    - "integration"

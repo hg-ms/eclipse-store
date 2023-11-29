@@ -55,6 +55,7 @@
     <modules>
         <module>afs</module>
         <module>storage</module>
+        <module>integrations</module>
     </modules>
 
     <scm>
