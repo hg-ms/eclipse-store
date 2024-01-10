@@ -1,7 +1,7 @@
 = Serializer
 
 {product-name}'s serialization engine, which is used by the storage, can be used standalone as well.
-It is usable as as replacement for the default Java serialization to convert objects to a binary format and vice versa. This API is part of the persistence-binary module:
+It is usable as replacement for the default Java serialization to convert objects to a binary format and vice versa. This API is part of the persistence-binary module:
 
 == Prerequisites
 
@@ -50,7 +50,7 @@ final Serializer<byte[]> serializer = Serializer.Bytes(foundation);
 
 === Export and import of the type dictionary
 The serializer creates a dictionary of all serialized types and their structure during the serialization process.
-Those type informations are required to deserialize data again. For serialized data that does not contain those type information it is possible to export all type information as a String and import them to another serializer instance.
+Those type information are required to deserialize data again. For serialized data that does not contain those type information it is possible to export all type information as a String and import them to another serializer instance.
 
 [source, java, title="Exporting the type dictionary"]
 ----
@@ -70,7 +70,7 @@ Customer restored = serializer.deserialize(data);
 
 == TypedSerializer
 The `TypedSerializer` implementation includes type information into the serialized output.
-By default the complete set of type information is included in all serialized output.
+By default, the complete set of type information is included in all serialized output.
 
 [source, java]
 ----
@@ -80,7 +80,7 @@ Customer restored = serializer.deserialize(data);
 ----
 
 === Configuring the included type information
-To reduce the serialized data it is possible to configure the included type information by suppling a `SerializerTypeInfoStrategyCreator` to the `SerializerFoundation`.
+To reduce the serialized data it is possible to configure the included type information by supplying a `SerializerTypeInfoStrategyCreator` to the `SerializerFoundation`.
 [source, java]
 ----
 final SerializerFoundation<?> foundation = SerializerFoundation.New()
@@ -106,5 +106,5 @@ return TypedSerializer.Bytes(foundation);
 
 ==== The `includeTypeInfoOnce` parameter:
 All three serializer type handling strategies allow to specify that the type information gets included only once if it has not changed by setting the parameter `includeTypeInfoOnce = true`.
-If so, the type information is only included if there where new types registered during the current serialization.
+If so, the type information is only included if there were new types registered during the current serialization.
 
