@@ -31,12 +31,42 @@ Customer restored = serializer.deserialize(data);
 ----
 
 == Type handling
-The serializer uses the {product-name}'s type handling system. This includes registration of new types on demand during serialization and xref:storage:legacy-type-mapping/index.adoc[legacy type mapping] when deserializing.
+The serializer uses the {product-name}'s type handling system. This includes registration of new types on demand during serialization and xref:storage:legacy-type-mapping/index.adoc[legacy type mapping] when deserializing. This information is stored in the serializers type dictionary.
 The `SerializerFoundation` provides an API like the MicroStream storage to configure the type handling behavior.
 
 [IMPORTANT]
 The default Serializer implementation does not include type information in the serialized output!
-If you want to deserialize that with another serializer instance you must register all classes using the `SerializerFoundation` before you create the serializer or use a `TypedSerializer`!
+If you want to deserialize that with another serializer instance you must register all serialized classes or use a `TypedSerializer`!
+
+=== Manually registering classes
+You can manually register classes using the `SerializerFoundation` before you create the serializer.
+
+[source, java]
+----
+final SerializerFoundation<?> foundation = SerializerFoundation.New()
+	.registerEntityType(Customer.class);
+final Serializer<byte[]> serializer = Serializer.Bytes(foundation);
+----
+
+=== Export and import of the type dictionary
+The serializer creates a dictionary of all serialized types and their structure during the serialization process.
+Those type informations are required to deserialize data again. For serialized data that does not contain those type information it is possible to export all type information as a String and import them to another serializer instance.
+
+[source, java, title="Exporting the type dictionary"]
+----
+final Serializer<byte[]> serializer = Serializer.Bytes();
+byte[] data = serializer.serialize(customer)
+
+String typeDictionaryString = serializer.exportTypeDictionay();
+----
+
+[source, java, title="Importing the type dictionary"]
+----
+final SerializerFoundation<?> foundation = SerializerFoundation.New(typeDictionaryString);
+final Serializer<byte[]> serializer = Serializer.Bytes(foundation);
+
+Customer restored = serializer.deserialize(data);
+----
 
 == TypedSerializer
 The `TypedSerializer` implementation includes type information into the serialized output.
